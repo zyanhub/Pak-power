@@ -1,20 +1,71 @@
 import streamlit as st
-from utils.db import create_table, add_vote, get_results
+from utils.db import create_table, add_vote, get_results, reset_data
 
-# table create (first run)
+# ---------------- INITIAL SETUP ----------------
+st.set_page_config(page_title="Pakistan Live Power", layout="centered")
+
+# Create DB table
 create_table()
 
-st.title("Pakistan Live Power 🇵🇰")
+# ---------------- SIDEBAR NAVIGATION ----------------
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["User Panel", "Admin Panel"])
 
-party = st.selectbox("Select Party", ["PTI", "PMLN", "PPP"])
+# ---------------- USER PANEL ----------------
+if page == "User Panel":
+    st.title("Pakistan Live Power 🇵🇰")
 
-if st.button("Vote"):
-    add_vote(party)
-    st.success("Vote Submitted!")
+    st.markdown("### Vote for your party")
 
-st.subheader("Live Results")
+    party = st.selectbox("Select Party", ["PTI", "PMLN", "PPP"])
 
-data = get_results()
+    if st.button("Submit Vote"):
+        add_vote(party)
+        st.success(f"Vote submitted for {party} ✅")
 
-for party, votes in data:
-    st.write(f"{party}: {votes}")
+    st.divider()
+
+    st.subheader("📊 Live Results")
+
+    data = get_results()
+
+    if data:
+        for party, votes in data:
+            st.write(f"👉 {party}: {votes} votes")
+    else:
+        st.info("No votes yet")
+
+# ---------------- ADMIN PANEL ----------------
+elif page == "Admin Panel":
+    st.title("Admin Dashboard 🔐")
+
+    password = st.text_input("Enter Admin Password", type="password")
+
+    # IMPORTANT: Better security (simple upgrade)
+    ADMIN_PASSWORD = "admin123"
+
+    if password:
+        if password == ADMIN_PASSWORD:
+            st.success("Access Granted ✅")
+
+            st.divider()
+
+            # Reset Button
+            if st.button("⚠️ Reset All Data"):
+                reset_data()
+                st.warning("All voting data has been deleted!")
+
+            st.divider()
+
+            st.subheader("📊 Current Voting Data")
+
+            data = get_results()
+
+            if data:
+                for party, votes in data:
+                    st.write(f"👉 {party}: {votes} votes")
+            else:
+                st.info("No data available")
+
+        else:
+            st.error("❌ Wrong Password")
