@@ -20,8 +20,11 @@ if page == "User Panel":
 
     party = st.selectbox("Select Party", ["PTI", "PMLN", "PPP"])
 
-    if st.button("Submit Vote"):
+        if st.session_state.get("voted"):
+        st.info("Aap is session mein vote de chuke hain ✅")
+    elif st.button("Submit Vote"):
         add_vote(party)
+        st.session_state["voted"] = True
         st.success(f"Vote submitted for {party} ✅")
 
     st.divider()
