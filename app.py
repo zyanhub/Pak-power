@@ -46,10 +46,10 @@ elif page == "Admin Panel":
     password = st.text_input("Enter Admin Password", type="password")
 
     # IMPORTANT: Better security (simple upgrade)
-    ADMIN_PASSWORD = "admin123"
-
-    if password:
-        if password == ADMIN_PASSWORD:
+        if not get_admin_password():
+        st.error("Admin password set nahi hai.")
+    elif password:
+        if check_password(password):
             st.success("Access Granted ✅")
 
             st.divider()
