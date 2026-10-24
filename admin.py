@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.auth import get_admin_password, check_password
 from utils.db import reset_data, get_results
 
 st.title("Admin Panel 🔐")
