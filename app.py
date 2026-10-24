@@ -20,7 +20,7 @@ if page == "User Panel":
 
     party = st.selectbox("Select Party", ["PTI", "PMLN", "PPP"])
 
-        if st.session_state.get("voted"):
+    if st.session_state.get("voted"):
         st.info("Aap is session mein vote de chuke hain ✅")
     elif st.button("Submit Vote"):
         add_vote(party)
@@ -45,8 +45,7 @@ elif page == "Admin Panel":
 
     password = st.text_input("Enter Admin Password", type="password")
 
-    # IMPORTANT: Better security (simple upgrade)
-        if not get_admin_password():
+    if not get_admin_password():
         st.error("Admin password set nahi hai.")
     elif password:
         if check_password(password):
