@@ -19,7 +19,7 @@ if page == "User Panel":
 
     st.markdown("### Vote for your party")
 
-    party = st.selectbox("Select Party", ["PTI", "PMLN", "PPP"])
+       party = st.selectbox("Select Party", ["MQM", "PMLN", "PPP", "JUI-F", "PTI", "JI", "TLP"])
 
     if st.session_state.get("voted"):
         st.info("Aap is session mein vote de chuke hain ✅")
