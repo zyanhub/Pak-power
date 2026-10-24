@@ -6,7 +6,9 @@ st.title("Admin Panel 🔐")
 
 password = st.text_input("Enter Password", type="password")
 
-if password == "admin123":
+if not get_admin_password():
+    st.error("Admin password set nahi hai.")
+elif check_password(password):
     st.success("Access Granted")
 
     if st.button("Reset All Data"):
