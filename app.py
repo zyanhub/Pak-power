@@ -1,4 +1,5 @@
 import streamlit as st
+from utils.auth import get_admin_password, check_password
 from utils.db import create_table, add_vote, get_results, reset_data
 
 # ---------------- INITIAL SETUP ----------------
