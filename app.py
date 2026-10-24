@@ -35,8 +35,12 @@ if page == "User Panel":
     data = get_results()
 
     if data:
-        for party, votes in data:
-            st.write(f"👉 {party}: {votes} votes")
+        total = sum(v for _, v in data)
+        df = pd.DataFrame(data, columns=["Party", "Votes"]).set_index("Party")
+        st.bar_chart(df)
+        for name, votes in data:
+            st.write(f"👉 {name}: {votes} votes ({votes / total * 100:.1f}%)")
+        st.caption(f"Total votes: {total}")
     else:
         st.info("No votes yet")
 
